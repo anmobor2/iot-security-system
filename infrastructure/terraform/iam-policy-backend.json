@@ -1,0 +1,27 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:ListBucket",
+        "s3:GetObject",
+        "s3:PutObject",
+        "s3:DeleteObject"
+      ],
+      "Resource": [
+        "arn:aws:s3:::iot-security-system-tfstate-${AWS_ACCOUNT_ID}",
+        "arn:aws:s3:::iot-security-system-tfstate-${AWS_ACCOUNT_ID}/*"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "dynamodb:GetItem",
+        "dynamodb:PutItem",
+        "dynamodb:DeleteItem"
+      ],
+      "Resource": "arn:aws:dynamodb:eu-west-1:${AWS_ACCOUNT_ID}:table/iot-security-system-tfstate-lock"
+    }
+  ]
+}
