@@ -60,3 +60,18 @@ module "eks" {
   eks_role_arn       = module.iam.eks_role_arn
   eks_node_role_arn  = module.iam.eks_node_role_arn
 }
+
+module "cloudwatch" {
+  source        = "./modules/cloudwatch"
+  environment   = var.environment
+  sns_topic_arn = module.sns_sqs.sns_topic_arn
+}
+
+module "quicksight" {
+  source               = "./modules/quicksight"
+  environment          = var.environment
+  s3_bucket_id         = module.s3.bucket_id
+  quicksight_username  = var.quicksight_username
+  quicksight_password  = var.quicksight_password
+  quicksight_user_arn  = var.quicksight_user_arn
+}

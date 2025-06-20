@@ -79,3 +79,17 @@ output "lambda_image_processor_arn" {
   description = "ARN of the image-processor Lambda"
   value       = module.lambda.image_processor_arn
 }
+
+output "cloudwatch_log_groups" {
+  description = "Names of CloudWatch log groups"
+  value = {
+    alert_processor = module.cloudwatch.alert_processor_log_group_name
+    image_processor = module.cloudwatch.image_processor_log_group_name
+    device_service  = module.cloudwatch.device_service_log_group_name
+  }
+}
+
+output "quicksight_dashboard_id" {
+  description = "ID of the QuickSight dashboard"
+  value       = module.quicksight.dashboard_id
+}
