@@ -22,9 +22,9 @@ spec:
             - containerPort: 8080
           env:
             - name: KAFKA_BOOTSTRAP_SERVERS
-              value: "replace-with-msk-bootstrap-servers"
+              value: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
             - name: DYNAMODB_ENDPOINT
-              value: "https://dynamodb.eu-west-1.amazonaws.com"
+              value: ${DYNAMODB_ENDPOINT:http://localhost:8000}
             - name: AWS_REGION
               value: "eu-west-1"
           resources:
