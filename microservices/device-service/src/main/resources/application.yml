@@ -9,8 +9,6 @@ spring:
     consumer:
       group-id: device-service-group
       auto-offset-reset: earliest
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
 
 management:
   endpoints:
@@ -20,5 +18,5 @@ management:
 
 aws:
   dynamodb:
-    endpoint: ${DYNAMODB_ENDPOINT:http://localhost:8000}
+    endpoint: http://localhost:4566
     region: eu-west-1
