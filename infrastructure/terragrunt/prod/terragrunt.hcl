@@ -16,4 +16,5 @@ inputs = {
   quicksight_username   = "admin"
   quicksight_password   = "placeholder-password"
   quicksight_user_arn   = "arn:aws:quicksight:eu-west-1:${get_aws_account_id()}:user/default/admin"
+  grafana_role_arn      = "arn:aws:iam::${get_aws_account_id()}:role/prod-GrafanaRole"
 }

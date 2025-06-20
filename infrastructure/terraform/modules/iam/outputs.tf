@@ -17,3 +17,8 @@ output "eks_node_role_arn" {
   description = "ARN of the IAM role for EKS node group"
   value       = aws_iam_role.eks_node_role.arn
 }
+
+output "grafana_role_arn" {
+  description = "ARN of the IAM role for Grafana"
+  value       = aws_iam_role.grafana_role.arn
+}

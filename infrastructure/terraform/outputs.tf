@@ -89,6 +89,16 @@ output "cloudwatch_log_groups" {
   }
 }
 
+output "grafana_workspace_id" {
+  description = "ID of the Grafana workspace"
+  value       = module.grafana.grafana_workspace_id
+}
+
+output "grafana_workspace_endpoint" {
+  description = "Endpoint of the Grafana workspace"
+  value       = module.grafana.grafana_workspace_endpoint
+}
+
 output "quicksight_dashboard_id" {
   description = "ID of the QuickSight dashboard"
   value       = module.quicksight.dashboard_id

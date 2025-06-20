@@ -205,3 +205,39 @@ resource "aws_iam_role_policy" "eks_node_additional_policy" {
     ]
   })
 }
+
+# IAM Role for Grafana
+resource "aws_iam_role" "grafana_role" {
+  name = "${var.environment}-GrafanaRole"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = "sts:AssumeRole"
+        Effect = "Allow"
+        Principal = {
+          Service = "grafana.amazonaws.com"
+        }
+      }
+    ]
+  })
+}
+
+resource "aws_iam_role_policy" "grafana_policy" {
+  role = aws_iam_role.grafana_role.id
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = [
+          "cloudwatch:Describe*",
+          "cloudwatch:Get*",
+          "cloudwatch:List*"
+        ]
+        Resource = "*"
+      }
+    ]
+  })
+}

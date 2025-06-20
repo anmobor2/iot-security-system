@@ -67,6 +67,12 @@ module "cloudwatch" {
   sns_topic_arn = module.sns_sqs.sns_topic_arn
 }
 
+module "grafana" {
+  source          = "./modules/grafana"
+  environment     = var.environment
+  grafana_role_arn = module.iam.grafana_role_arn
+}
+
 module "quicksight" {
   source               = "./modules/quicksight"
   environment          = var.environment

@@ -44,3 +44,9 @@ variable "quicksight_user_arn" {
   type        = string
   default     = "arn:aws:quicksight:eu-west-1:123456789012:user/default/admin"
 }
+
+variable "grafana_role_arn" {
+  description = "ARN of the IAM role for Grafana"
+  type        = string
+  default     = "arn:aws:iam::123456789012:role/dev-GrafanaRole"
+}
