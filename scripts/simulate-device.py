@@ -4,7 +4,7 @@ import json
 import time
 
 # Configuration
-endpoint = "<your-iot-endpoint>"  # e.g., xxxxxxxxxx-ats.iot.us-east-1.amazonaws.com
+endpoint = "<iot-endpoint>"  # e.g., xxxxxxxxxx-ats.iot.us-east-1.amazonaws.com
 port = 8883
 client_id = "TestSensor"
 cert_path = "certs/<id>.certificate.pem.crt"

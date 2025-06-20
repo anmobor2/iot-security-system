@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-device-service
+  namespace: iot-security
+  labels:
+    app: device-service
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: device-service
+  template:
+    metadata:
+      labels:
+        app: device-service
+    spec:
+      containers:
+        - name: device-service
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: 8080
+          env:
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: {{ .Values.env.KAFKA_BOOTSTRAP_SERVERS }}
+            - name: DYNAMODB_ENDPOINT
+              value: {{ .Values.env.DYNAMODB_ENDPOINT }}
+            - name: AWS_REGION
+              value: {{ .Values.env.AWS_REGION }}
+          resources:
+            limits:
+              cpu: {{ .Values.resources.limits.cpu }}
+              memory: {{ .Values.resources.limits.memory }}
+            requests:
+              cpu: {{ .Values.resources.requests.cpu }}
+              memory: {{ .Values.resources.requests.memory }}
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.livenessProbe.httpGet.path }}
+              port: {{ .Values.livenessProbe.httpGet.port }}
+            initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
