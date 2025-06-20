@@ -14,32 +14,14 @@ variable "aws_account_id" {
   type        = string
 }
 
-variable "kafka_destination_arn" {
-  description = "ARN of the Kafka destination (MSK)"
+variable "vpc_id" {
+  description = "VPC ID for MSK and EKS"
   type        = string
-  default     = "arn:aws:kafka:us-east-1:123456789012:cluster/placeholder"
+  default     = "vpc-12345678" # Placeholder
 }
 
-variable "kafka_bootstrap_servers" {
-  description = "Kafka bootstrap servers"
-  type        = string
-  default     = "replace-with-msk-bootstrap-servers"
-}
-
-variable "sns_topic_arn" {
-  description = "ARN of the SNS topic"
-  type        = string
-  default     = "arn:aws:sns:us-east-1:123456789012:SecurityAlerts"
-}
-
-variable "sqs_queue_url" {
-  description = "URL of the SQS queue"
-  type        = string
-  default     = "https://sqs.us-east-1.amazonaws.com/123456789012/CameraTasks"
-}
-
-variable "iot_role_arn" {
-  description = "ARN of the IAM role for IoT rules"
-  type        = string
-  default     = "arn:aws:iam::123456789012:role/IoTRole"
+variable "subnet_ids" {
+  description = "Subnet IDs for MSK and EKS"
+  type        = list(string)
+  default     = ["subnet-12345678", "subnet-87654321"] # Placeholder
 }

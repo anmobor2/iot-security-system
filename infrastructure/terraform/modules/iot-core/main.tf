@@ -46,15 +46,15 @@ resource "aws_iot_thing_principal_attachment" "thing_attachment" {
 # IoT Rule for Kafka
 resource "aws_iot_topic_rule" "route_to_kafka" {
   name        = "${var.environment}_RouteToKafka"
-  enabled     = false # Disable until MSK is configured
+  enabled     = true
   sql         = "SELECT * FROM 'security/sensors/#' WHERE eventType IN ('motion', 'door_open')"
   sql_version = "2016-03-23"
 
   kafka {
-    destination_arn = var.kafka_destination_arn # Placeholder
+    destination_arn = var.kafka_destination_arn
     topic           = "security.sensors.events"
     client_properties = {
-      "bootstrap.servers" = var.kafka_bootstrap_servers # Placeholder
+      "bootstrap.servers" = var.kafka_bootstrap_servers
       "security.protocol" = "SASL_SSL"
       "sasl.mechanism"    = "SCRAM-SHA-512"
     }
@@ -64,13 +64,13 @@ resource "aws_iot_topic_rule" "route_to_kafka" {
 # IoT Rule for SNS
 resource "aws_iot_topic_rule" "route_to_sns" {
   name        = "${var.environment}_RouteToSNS"
-  enabled     = false # Disable until SNS is configured
+  enabled     = true
   sql         = "SELECT * FROM 'security/+' WHERE eventType IN ('motion', 'face_detected')"
   sql_version = "2016-03-23"
 
   sns {
-    target_arn = var.sns_topic_arn # Placeholder
-    role_arn   = var.iot_role_arn  # Placeholder
+    target_arn = var.sns_topic_arn
+    role_arn   = var.iot_role_arn
     message_format = "RAW"
   }
 }
@@ -78,13 +78,13 @@ resource "aws_iot_topic_rule" "route_to_sns" {
 # IoT Rule for SQS
 resource "aws_iot_topic_rule" "route_to_sqs" {
   name        = "${var.environment}_RouteToSQS"
-  enabled     = false # Disable until SQS is configured
+  enabled     = true
   sql         = "SELECT * FROM 'security/cameras/detection'"
   sql_version = "2016-03-23"
 
   sqs {
-    queue_url = var.sqs_queue_url # Placeholder
-    role_arn  = var.iot_role_arn  # Placeholder
+    queue_url = var.sqs_queue_url
+    role_arn  = var.iot_role_arn
     use_base64 = false
   }
 }

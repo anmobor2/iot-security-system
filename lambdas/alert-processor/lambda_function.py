@@ -7,7 +7,7 @@ logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
 sns_client = boto3.client('sns')
-sns_topic_arn = os.environ.get('SNS_TOPIC_ARN', 'arn:aws:sns:us-east-1:123456789012:SecurityAlerts')
+sns_topic_arn = os.environ.get('SNS_TOPIC_ARN', 'arn:aws:sns:eu-west-1:123456789012:dev-SecurityAlerts')
 
 def lambda_handler(event, context):
     try:
