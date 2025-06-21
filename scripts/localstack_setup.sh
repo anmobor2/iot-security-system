@@ -1,5 +1,7 @@
 #!/bin/bash
 
+docker rm -f localstack 2>/dev/null
+
 # Start LocalStack with required services
 docker run -d \
   -p 4566:4566 \
@@ -21,4 +23,4 @@ aws configure set region eu-west-1
 aws configure set endpoint_url http://localhost:4566
 
 # Run initialization script
-python scripts/localstack_init.py
+python $(dirname "$0")/localstack_init.py
