@@ -43,3 +43,13 @@ variable "iot_role_arn" {
   type        = string
   default     = "arn:aws:iam::123456789012:role/IoTRole"
 }
+
+variable "lambda_function_arn" {
+  default = ""
+}
+variable "s3_bucket_name" {
+  default = ""
+}
+variable "cw_log_group" {
+  default = ""
+}

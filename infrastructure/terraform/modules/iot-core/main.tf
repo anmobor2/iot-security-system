@@ -110,3 +110,41 @@ resource "aws_iot_topic_rule" "send_to_kafka" {
 
   role_arn = var.iot_role_arn
 }
+
+resource "aws_iot_topic_rule" "complex_rule" {
+  name        = "${var.environment}_ComplexRule"
+  description = "Regla avanzada: filtra, transforma y enruta a Lambda, S3 y CloudWatch Logs"
+  enabled     = true
+
+  sql = <<EOF
+    SELECT
+      deviceId,
+      temperature,
+      timestamp(),
+      CASE
+        WHEN temperature > 80 THEN 'ALERT'
+        ELSE 'NORMAL'
+      END AS status,
+      encode(payload(), 'base64') AS raw_payload
+    FROM 'sensors/+/temperature'
+    WHERE temperature > 70 AND isUndefined(humidity) = false AND humidity < 30
+  EOF
+
+  sql_version = "2016-03-23"
+
+  lambda {
+    function_arn = var.lambda_function_arn
+    role_arn     = var.iot_role_arn
+  }
+
+  s3 {
+    bucket_name = var.s3_bucket_name
+    key         = "iot/${topic()}/${timestamp()}.json"
+    role_arn    = var.iot_role_arn
+  }
+
+  cloudwatch_logs {
+    log_group_name = var.cw_log_group
+    role_arn       = var.iot_role_arn
+  }
+}
