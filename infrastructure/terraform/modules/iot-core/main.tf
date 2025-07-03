@@ -88,3 +88,25 @@ resource "aws_iot_topic_rule" "route_to_sqs" {
     use_base64 = false
   }
 }
+
+resource "aws_iot_topic_rule" "send_to_kafka" {
+  name        = "sendToKafka-${var.environment}"
+  description = "Regla IoT que reenvía mensajes a MSK"
+  enabled     = true
+
+  sql = "SELECT * FROM 'dispositivos/+/eventos'"
+
+  sql_version = "2016-03-23"
+
+  kafka {
+    destination_arn    = var.kafka_destination_arn
+    topic              = "iot-events"
+    key                = "${topic()}"
+    partition          = "0"
+    client_properties = {
+      "bootstrap.servers" = var.kafka_bootstrap_servers
+    }
+  }
+
+  role_arn = var.iot_role_arn
+}
